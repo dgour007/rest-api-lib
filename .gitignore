@@ -1,0 +1,16 @@
+HELP.md
+target/
+.settings/
+src/main/java/META-INF/
+**/src/main/java/om/omantel/iptvesb/**
+src/main/resources/wsdl/**
+src/test/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.classpath
+.project
+.settings
+.springBeans
