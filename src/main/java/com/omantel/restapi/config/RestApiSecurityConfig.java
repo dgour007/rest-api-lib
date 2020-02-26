@@ -40,7 +40,8 @@ public class RestApiSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-				.anyRequest().authenticated().and().httpBasic().realmName(REALM)
+				.anyRequest().authenticated()
+				.and().httpBasic().realmName(REALM)
 				.authenticationEntryPoint(getBasicAuthEntryPoint())
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // We don't need sessions to be created.
 				.and().formLogin().disable();

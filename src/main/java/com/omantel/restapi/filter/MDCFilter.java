@@ -13,7 +13,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.MDC;
+import org.apache.logging.log4j.ThreadContext;
+//import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,16 +39,24 @@ public class MDCFilter implements Filter {
 		    	
 		    	//System.out.println("logUserId "+logUserId+" logSessionId "+logSessionId+" logRequestId "+logRequestId);
 		    	
-		    	MDC.put("userid", logUserId);
-				MDC.put("sessionid", logSessionId);
-				MDC.put("requestid", logRequestId);
+		    	//MDC.put("userid", logUserId);
+				//MDC.put("sessionid", logSessionId);
+				//MDC.put("requestid", logRequestId);
 		    	
+				ThreadContext.put("userid", logUserId);
+				ThreadContext.put("sessionid", logSessionId);
+				ThreadContext.put("requestid", logRequestId);
+				
 			}
 			chain.doFilter(request, response);
 		} finally {
-			MDC.remove("sessionid");
+			/*MDC.remove("sessionid");
 			MDC.remove("userid");
-			MDC.remove("requestid");
+			MDC.remove("requestid");*/
+			
+			ThreadContext.remove("sessionid");
+			ThreadContext.remove("userid");
+			ThreadContext.remove("requestid");
 		}
 	}
 
