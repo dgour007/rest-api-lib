@@ -1,7 +1,8 @@
 package com.omantel.restapi.config;
 
 import java.security.cert.X509Certificate;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.SSLContext;
 
@@ -19,6 +20,8 @@ import org.apache.http.ssl.TrustStrategy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
@@ -94,9 +97,19 @@ public class RestApiRestTemplateConfig {
 	public RestTemplate restTemplate(HttpClient httpClient) {
 		HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 		requestFactory.setHttpClient(httpClient);
-		RestTemplate restTemplate = new RestTemplate(requestFactory);
-		restTemplate
-				.setInterceptors(Collections.singletonList(new RestApiRestAuthInterceptor(restUsername, restPassword)));
+//		RestTemplate restTemplate = new RestTemplate(requestFactory);
+//		restTemplate
+//				.setInterceptors(Collections.singletonList(new RestApiRestAuthInterceptor(restUsername, restPassword)));
+
+		RestTemplate restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(requestFactory));
+
+		List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
+		if (interceptors == null) {
+			interceptors = new ArrayList<>();
+		}
+		interceptors.add(new RequestResponseLoggingInterceptor());
+		interceptors.add(new RestApiRestAuthInterceptor(restUsername, restPassword));
+		restTemplate.setInterceptors(interceptors);
 		return restTemplate;
 
 	}
