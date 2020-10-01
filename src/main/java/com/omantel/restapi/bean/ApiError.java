@@ -4,6 +4,7 @@
 package com.omantel.restapi.bean;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +35,17 @@ public class ApiError {
 	private String debugMessage;
 	private List<String> errors;
 
+	public void setTimestamp(String timestamp) {
+		//this.timestamp = timestamp;
+		this.timestamp = LocalDateTime.parse(timestamp, 
+				DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+	}
+	
+	public void setTimestamp(LocalDateTime timestamp) {
+		//this.timestamp = timestamp;
+		this.timestamp = timestamp;
+	}
+	
 	public ApiError() {
 		timestamp = LocalDateTime.now();
 	}
