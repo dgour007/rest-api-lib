@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.omantel.restapi.bean.ApiError;
 import com.omantel.restapi.config.Messages;
+import com.omantel.restapi.exception.ApiException;
 import com.omantel.restapi.exception.DataNotFoundError;
 import com.omantel.restapi.exception.ExpectationFailureException;
 import com.omantel.restapi.exception.ExternalInterfaceException;
@@ -121,6 +122,14 @@ public class RestResponseExceptionAdvice extends ResponseEntityExceptionHandler 
 		log.info("ExpectationFailureException response {}", messages.get(e.getMessage()));
 		
 		return buildResponseEntity(new ApiError(HttpStatus.EXPECTATION_FAILED, messages.get(e.getMessage())));
+	}
+	
+	@ExceptionHandler(ApiException.class)
+	public ResponseEntity<Object> handleException(ApiException e) {
+		
+		log.info("ApiException status {}, message {}", e.getApiError().getStatus(), e.getApiError().getMessage());
+		
+		return buildResponseEntity(e.getApiError());
 	}
 	
 	@ExceptionHandler(Exception.class)

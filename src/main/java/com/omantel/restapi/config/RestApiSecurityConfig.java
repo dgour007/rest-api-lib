@@ -47,6 +47,7 @@ public class RestApiSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().formLogin().disable();
 
 		http.csrf().disable();
+		http.cors();
 	}
 
 	@Bean
