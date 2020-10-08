@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Implementation-Title: CRMRestApiLib
-Implementation-Version: 3.0
+Implementation-Version: 4.0
 Built-By: 70145
 Implementation-Vendor-Id: com.omantel
 Build-Jdk: 1.8.0_161
