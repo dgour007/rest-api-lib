@@ -71,6 +71,8 @@ public class RestApiRestAuthInterceptor implements ClientHttpRequestInterceptor 
 	        	headers.add("logSessionId", httpServletRequest.getHeader("logSessionId"));
         		headers.add("logRequestId", httpServletRequest.getHeader("logRequestId"));
         		headers.add("logUserId", httpServletRequest.getHeader("logUserId"));
+        		headers.add("flowId", httpServletRequest.getHeader("flowId"));
+        		headers.add("orderType", httpServletRequest.getHeader("orderType"));
 	        }
         } catch (Exception e) {
         	//logger.error("Exception in RestAuthInterceptor {}", e.getMessage());
